@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- HEADER -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:background="@color/primary"
+                android:elevation="6dp"
+                android:paddingBottom="32dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="KarmaCart"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:letterSpacing="0.02"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Connecting communities 🤝"
+                    android:textSize="15sp"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+
+            <!-- SEARCH BAR -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/searchLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="12dp"
+                app:startIconDrawable="@drawable/ic_search"
+                app:startIconTint="@color/primary"
+                app:boxCornerRadiusTopStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxStrokeColor="@color/primary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Search posts"
+                    android:textSize="15sp"
+                    android:padding="12dp"
+                    android:background="@android:color/transparent"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- CATEGORY CHIPS (FIXED WIDTH + HEIGHT) -->
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipCategories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_marginHorizontal="16dp"
+                app:singleLine="false"
+                app:chipSpacing="8dp">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipBlood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/KarmaChipRed"
+                    android:text="Blood"
+                    app:chipIcon="@drawable/ic_blood"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipFood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/KarmaChipPrimary"
+                    android:text="Food"
+                    app:chipIcon="@drawable/ic_food"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipClothes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/KarmaChipPrimary"
+                    android:text="Clothes"
+                    app:chipIcon="@drawable/ic_clothes"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipMedicine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/KarmaChipPrimary"
+                    android:text="Medicine"
+                    app:chipIcon="@drawable/ic_medicine"/>
+            </com.google.android.material.chip.ChipGroup>
+
+            <!-- ACTION BUTTON GRID -->
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="16dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRequestHelp"
+                    style="@style/KarmaActionButton"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1"
+                    android:text="Request help"
+                    app:icon="@drawable/ic_request"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnOfferHelp"
+                    style="@style/KarmaActionButton"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1"
+                    android:text="Offer help"
+                    app:icon="@drawable/ic_offer"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnMyPosts"
+                    style="@style/KarmaActionButton"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1"
+                    android:text="My posts"
+                    app:icon="@drawable/ic_my_posts"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAllPosts"
+                    style="@style/KarmaActionButton"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1"
+                    android:text="All posts"
+                    app:icon="@drawable/ic_all_posts"/>
+            </GridLayout>
+
+            <!-- LATEST POSTS TITLE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Latest posts"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/onSurface"
+                android:layout_marginTop="28dp"
+                android:layout_marginHorizontal="20dp"/>
+
+            <!-- EMPTY STATE -->
+            <TextView
+                android:id="@+id/emptyState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📝 No posts yet.\nTap + to add your first request or donation."
+                android:textAlignment="center"
+                android:padding="20dp"
+                android:textColor="@color/onSurfaceVariant"
+                android:visibility="gone"
+                android:layout_marginTop="12dp"/>
+
+            <!-- POSTS LIST -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPosts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- ADD POST FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        app:srcCompat="@drawable/ic_add"
+        app:backgroundTint="@color/primary"
+        app:tint="@android:color/white"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

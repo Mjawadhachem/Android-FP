@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Primary Chip (purple) -->
+    <style name="KarmaChipPrimary" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="chipBackgroundColor">#F2E7FE</item>
+        <item name="chipIconTint">@color/primary</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="chipCornerRadius">18dp</item>
+    </style>
+
+    <!-- Red Chip (Blood) -->
+    <style name="KarmaChipRed" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="chipBackgroundColor">#FFEAEA</item>
+        <item name="chipIconTint">@color/dangerRed</item>
+        <item name="android:textColor">@color/dangerRed</item>
+        <item name="chipCornerRadius">18dp</item>
+    </style>
+
+    <!-- Dashboard Action Buttons -->
+    <style name="KarmaActionButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_margin">8dp</item>
+
+        <item name="cornerRadius">16dp</item>
+        <item name="strokeColor">@color/primary</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="iconTint">@color/primary</item>
+        <item name="iconPadding">12dp</item>
+    </style>
+
+
+</resources>

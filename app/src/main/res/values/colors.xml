@@ -1,0 +1,25 @@
+<resources>
+    <color name="primary">#6750A4</color>
+    <color name="primaryLight">#EADDFF</color>
+    <color name="primaryDark">#4F378B</color>
+
+    <color name="secondary">#625B71</color>
+    <color name="secondaryLight">#CCC2DC</color>
+
+    <color name="dangerRed">#D32F2F</color>
+    <color name="successGreen">#4CAF50</color>
+
+    <color name="surface">#F6F6F6</color>
+    <color name="surfaceDark">#1E1E1E</color>
+
+    <color name="onSurface">#1C1B1F</color>
+    <color name="onSurfaceVariant">#49454E</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="purpleDark">#9B5DE5</color>        <!-- Offer color -->
+    <color name="redRequest">#FF6B6B</color>        <!-- Request color -->
+    <color name="toggleBackground">#E9DDF7</color>  <!-- Light purple BG -->
+    <color name="inputFieldBg">#F6F2FA</color>      <!-- Soft input background -->
+    <color name="toggleSurface">#EFE6FF</color>
+    <color name="screenBackground">#F7F5FF</color>
+
+</resources>
