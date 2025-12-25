@@ -9,7 +9,11 @@ import kotlinx.coroutines.launch
 
 class PostViewModel(private val repo: PostRepository) : ViewModel() {
 
+    // Current list (all posts)
     val posts = repo.posts.asLiveData()
+
+    // Optional: only active posts (if later you want a toggle "Active only")
+    val activePosts = repo.activePosts.asLiveData()
 
     fun addPost(
         type: String,
@@ -25,7 +29,8 @@ class PostViewModel(private val repo: PostRepository) : ViewModel() {
                     title = title,
                     description = desc,
                     category = cat,
-                    contact = contact
+                    contact = contact,
+                    isCompleted = false
                 )
             )
         }
@@ -34,6 +39,13 @@ class PostViewModel(private val repo: PostRepository) : ViewModel() {
     fun deletePost(post: Post) {
         viewModelScope.launch {
             repo.remove(post)
+        }
+    }
+
+    // NEW: mark a post as completed
+    fun markPostCompleted(postId: Int) {
+        viewModelScope.launch {
+            repo.markAsCompleted(postId)
         }
     }
 }

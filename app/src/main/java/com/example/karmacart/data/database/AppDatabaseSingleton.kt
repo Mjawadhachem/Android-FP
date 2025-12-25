@@ -14,7 +14,11 @@ object AppDatabaseSingleton {
                 context.applicationContext,
                 AppDatabase::class.java,
                 "karmacart.db"
-            ).build()
+            )
+                // IMPORTANT: schema changed (version 1 -> 2), recreate DB if needed
+                .fallbackToDestructiveMigration()
+                .build()
+
             INSTANCE = instance
             instance
         }

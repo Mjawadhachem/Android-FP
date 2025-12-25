@@ -16,6 +16,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- TYPE ROW -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,9 +37,9 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/primary" />
-
         </LinearLayout>
 
+        <!-- TITLE -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
@@ -48,6 +49,7 @@
             android:textStyle="bold"
             android:textColor="@color/onSurface" />
 
+        <!-- DESCRIPTION -->
         <TextView
             android:id="@+id/tvDescription"
             android:layout_width="match_parent"
@@ -56,6 +58,7 @@
             android:textSize="14sp"
             android:textColor="@color/onSurfaceVariant" />
 
+        <!-- META -->
         <TextView
             android:id="@+id/tvMeta"
             android:layout_width="match_parent"
@@ -63,6 +66,33 @@
             android:layout_marginTop="10dp"
             android:textSize="12sp"
             android:textColor="@color/secondary" />
+
+        <!-- ACTION ROW -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="end">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnContact"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Contact"
+                android:textSize="12sp"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                app:cornerRadius="12dp"
+                android:layout_marginEnd="8dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDone"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Done"
+                android:textSize="12sp"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                app:cornerRadius="12dp" />
+        </LinearLayout>
 
     </LinearLayout>
 

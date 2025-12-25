@@ -70,7 +70,7 @@
                     android:background="@android:color/transparent"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- CATEGORY CHIPS (FIXED WIDTH + HEIGHT) -->
+            <!-- CATEGORY CHIPS -->
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipCategories"
                 android:layout_width="match_parent"
@@ -165,6 +165,33 @@
                 android:layout_marginTop="28dp"
                 android:layout_marginHorizontal="20dp"/>
 
+            <!-- ACTIVE / ALL TOGGLE -->
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipStatusGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="16dp"
+                app:singleSelection="true"
+                app:selectionRequired="true"
+                app:chipSpacing="8dp">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipActive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/KarmaChipPrimary"
+                    android:text="@string/active"
+                    android:checked="true"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/KarmaChipPrimary"
+                    android:text="@string/all"/>
+            </com.google.android.material.chip.ChipGroup>
+
             <!-- EMPTY STATE -->
             <TextView
                 android:id="@+id/emptyState"
@@ -193,6 +220,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
+        android:contentDescription="@string/add_post"
         app:srcCompat="@drawable/ic_add"
         app:backgroundTint="@color/primary"
         app:tint="@android:color/white"/>

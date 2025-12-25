@@ -10,5 +10,8 @@ data class Post(
     val title: String,       // e.g. "Need O+ blood at hospital"
     val description: String, // details
     val category: String,    // "Blood", "Furniture", "Food", ...
-    val contact: String      // phone / WhatsApp / email
+    val contact: String,     // phone / WhatsApp / email
+
+    // NEW: status tracking (so we can mark as done later)
+    val isCompleted: Boolean = false
 )
