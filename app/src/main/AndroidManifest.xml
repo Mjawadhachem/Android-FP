@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
 
     <application
         android:allowBackup="true"
@@ -11,11 +15,29 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.KarmaCart">
+        android:theme="@style/Theme.KarmaCart"
+        android:usesCleartextTraffic="true">
+
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity
+            android:name=".PostDetailsActivity"
+            android:exported="false" />
+
+
+
 
         <!-- Add Post Screen -->
         <activity
             android:name=".AddPostActivity"
+            android:exported="false" />
+
+        <!-- Map Screen -->
+        <activity
+            android:name=".MapActivity"
             android:exported="false" />
 
         <!-- Main Dashboard -->

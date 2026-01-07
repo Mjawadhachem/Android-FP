@@ -47,7 +47,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-
+    implementation("org.osmdroid:osmdroid-android:6.1.18")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
 
     // Lifecycle & ViewModel

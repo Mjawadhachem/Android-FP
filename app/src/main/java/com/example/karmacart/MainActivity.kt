@@ -22,12 +22,12 @@ import com.example.karmacart.viewmodel.PostViewModel
 import com.example.karmacart.viewmodel.PostViewModelFactory
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
+import org.osmdroid.config.Configuration
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: PostAdapter
-
     private var allPosts: List<Post> = emptyList()
 
     private val vm: PostViewModel by viewModels {
@@ -37,6 +37,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val config = Configuration.getInstance()
+        config.load(applicationContext, getSharedPreferences("osmdroid", MODE_PRIVATE))
+        config.userAgentValue = packageName
+        config.osmdroidBasePath = filesDir
+        config.osmdroidTileCache = filesDir
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -48,21 +55,35 @@ class MainActivity : AppCompatActivity() {
         setupFab()
     }
 
-    // ---------------- RECYCLER ----------------
     private fun setupRecycler() {
         adapter = PostAdapter(
             emptyList(),
+
+            // Long press delete (existing behavior)
             onLongPress = { post ->
-                lifecycleScope.launch { vm.deletePost(post) }
+                lifecycleScope.launch {
+                    vm.deletePost(post)
+                }
             },
+
+            // Done button
             onDoneClick = { post ->
                 if (!post.isCompleted) {
                     vm.markPostCompleted(post.id)
                     scheduleUrgentNotification(post.title, post.category)
                 }
             },
+
+            // Contact button
             onContactClick = { post ->
                 openContact(post.contact)
+            },
+
+            // ✅ DELETE BUTTON (THIS WAS MISSING)
+            onDeleteClick = { post ->
+                lifecycleScope.launch {
+                    vm.deletePost(post)
+                }
             }
         )
 
@@ -70,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         binding.rvPosts.adapter = adapter
     }
 
-    // ---------------- DATA ----------------
+
     private fun observePosts() {
         vm.posts.observe(this) { posts ->
             allPosts = posts
@@ -79,23 +100,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // ---------------- SEARCH ----------------
     private fun setupSearch() {
         binding.etSearch.addTextChangedListener { text ->
             val q = text.toString().lowercase()
-
             val filtered = allPosts.filter {
                 it.title.lowercase().contains(q) ||
                         it.description.lowercase().contains(q) ||
                         it.category.lowercase().contains(q)
             }
-
             adapter.submit(filtered)
             binding.emptyState.isVisible = filtered.isEmpty()
         }
     }
 
-    // ---------------- CATEGORY FILTERS ----------------
     private fun setupCategories() {
         binding.chipBlood.setOnClickListener { filterCategory("blood") }
         binding.chipFood.setOnClickListener { filterCategory("food") }
@@ -104,28 +121,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun filterCategory(cat: String) {
-        val filtered = allPosts.filter {
-            it.category.lowercase().contains(cat)
-        }
+        val filtered = allPosts.filter { it.category.lowercase().contains(cat) }
         adapter.submit(filtered)
         binding.emptyState.isVisible = filtered.isEmpty()
     }
 
-    // ---------------- DASHBOARD ----------------
     private fun setupDashboard() {
 
         binding.btnRequestHelp.setOnClickListener {
-            val filtered = allPosts.filter {
-                it.type.equals("REQUEST", ignoreCase = true)
-            }
+            val filtered = allPosts.filter { it.type.equals("REQUEST", true) }
             adapter.submit(filtered)
             binding.emptyState.isVisible = filtered.isEmpty()
         }
 
         binding.btnOfferHelp.setOnClickListener {
-            val filtered = allPosts.filter {
-                it.type.equals("DONATION", ignoreCase = true)
-            }
+            val filtered = allPosts.filter { it.type.equals("DONATION", true) }
             adapter.submit(filtered)
             binding.emptyState.isVisible = filtered.isEmpty()
         }
@@ -135,50 +145,39 @@ class MainActivity : AppCompatActivity() {
             binding.emptyState.isVisible = allPosts.isEmpty()
         }
 
-        binding.btnMyPosts.setOnClickListener {
-            // Future feature – intentionally left empty
+        binding.btnMyPosts.setOnClickListener { }
+
+        // ✅ VIEW MODE
+        binding.btnMap.setOnClickListener {
+            startActivity(
+                Intent(this, MapActivity::class.java).apply {
+                    putExtra(MapActivity.EXTRA_SELECT_MODE, false)
+                }
+            )
         }
     }
 
-    // ---------------- FAB ----------------
     private fun setupFab() {
         binding.fabAdd.setOnClickListener {
             startActivity(Intent(this, AddPostActivity::class.java))
         }
     }
 
-    // ---------------- CONTACT ----------------
     private fun openContact(contact: String) {
         val trimmed = contact.trim()
-
         if (Patterns.EMAIL_ADDRESS.matcher(trimmed).matches()) {
-            val intent = Intent(Intent.ACTION_SENDTO).apply {
-                data = Uri.parse("mailto:$trimmed")
-            }
-            startActivity(intent)
+            startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:$trimmed")))
             return
         }
-
-        val phone = trimmed.replace(" ", "")
-        val intent = Intent(Intent.ACTION_DIAL).apply {
-            data = Uri.parse("tel:$phone")
-        }
-        startActivity(intent)
+        startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:${trimmed.replace(" ", "")}")))
     }
 
-    // ---------------- WORKMANAGER ----------------
     private fun scheduleUrgentNotification(title: String, category: String) {
-
-        val data = workDataOf(
-            "title" to title,
-            "category" to category
-        )
-
+        val data = workDataOf("title" to title, "category" to category)
         val request = OneTimeWorkRequestBuilder<UrgentPostWorker>()
             .setInputData(data)
-            .setInitialDelay(10, TimeUnit.SECONDS) // demo delay
+            .setInitialDelay(10, TimeUnit.SECONDS)
             .build()
-
         WorkManager.getInstance(this).enqueue(request)
     }
 }

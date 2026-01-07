@@ -1,6 +1,9 @@
 package com.example.karmacart
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -17,10 +20,26 @@ class AddPostActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddPostBinding
 
+    private var selectedLatitude = 0.0
+    private var selectedLongitude = 0.0
+    private var isRequestSelected = true
+
     private val vm: PostViewModel by viewModels {
         val db = AppDatabaseSingleton.getDatabase(this)
         PostViewModelFactory(PostRepository(db.postDao()))
     }
+
+    private val mapLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                result.data?.let { data ->
+                    selectedLatitude = data.getDoubleExtra("latitude", 0.0)
+                    selectedLongitude = data.getDoubleExtra("longitude", 0.0)
+
+                    Snackbar.make(binding.root, "Location selected", Snackbar.LENGTH_SHORT).show()
+                }
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,13 +51,18 @@ class AddPostActivity : AppCompatActivity() {
 
     private fun setupUi() {
 
-        binding.toggleType.check(binding.btnTypeRequest.id)
-        updateToggleColors(true)
+        setupCategoryDropdown() // ✅ now works
 
         binding.toggleType.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (!isChecked) return@addOnButtonCheckedListener
+            isRequestSelected = checkedId == binding.btnTypeRequest.id
+            updateToggleColors(isRequestSelected)
+        }
 
-            updateToggleColors(checkedId == binding.btnTypeRequest.id)
+        binding.btnSelectLocation.setOnClickListener {
+            val intent = Intent(this, MapActivity::class.java)
+                .putExtra(MapActivity.EXTRA_SELECT_MODE, true)
+            mapLauncher.launch(intent)
         }
 
         binding.btnCreate.setOnClickListener {
@@ -52,14 +76,46 @@ class AddPostActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val type = if (binding.btnTypeRequest.isChecked) "REQUEST" else "DONATION"
+            if (selectedLatitude == 0.0 && selectedLongitude == 0.0) {
+                Snackbar.make(binding.root, "Please select a location", Snackbar.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val type = if (isRequestSelected) "REQUEST" else "DONATION"
 
             lifecycleScope.launch {
-                vm.addPost(type, title, desc, cat, contact)
+                vm.addPost(
+                    type = type,
+                    title = title,
+                    desc = desc,
+                    cat = cat,
+                    contact = contact,
+                    latitude = selectedLatitude,
+                    longitude = selectedLongitude
+                )
+
                 Snackbar.make(binding.root, "Post created", Snackbar.LENGTH_SHORT).show()
                 finish()
             }
         }
+    }
+
+    // ✅ DROPDOWN SETUP (NOW VALID)
+    private fun setupCategoryDropdown() {
+        val categories = listOf(
+            "Blood",
+            "Food",
+            "Clothes",
+            "Medicine"
+        )
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_list_item_1,
+            categories
+        )
+
+        binding.etCategory.setAdapter(adapter)
     }
 
     private fun updateToggleColors(isRequest: Boolean) {
@@ -75,7 +131,6 @@ class AddPostActivity : AppCompatActivity() {
 
             binding.btnTypeOffer.setBackgroundColor(lightBg)
             binding.btnTypeOffer.setTextColor(purple)
-
         } else {
             binding.btnTypeOffer.setBackgroundColor(purple)
             binding.btnTypeOffer.setTextColor(white)

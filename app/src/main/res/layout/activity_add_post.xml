@@ -6,24 +6,25 @@
     android:padding="24dp">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <!-- TITLE -->
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Create new post"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:layout_marginBottom="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_marginBottom="16dp" />
 
-        <!-- TOGGLE -->
+        <!-- REQUEST / OFFER TOGGLE -->
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/toggleType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="16dp"
             app:singleSelection="true"
             app:selectionRequired="true">
 
@@ -34,9 +35,9 @@
                 android:layout_weight="1"
                 android:text="Request"
                 android:textStyle="bold"
-                app:cornerRadius="20dp"
                 android:textColor="@color/white"
-                app:backgroundTint="@color/redRequest"/>
+                app:cornerRadius="20dp"
+                app:backgroundTint="@color/redRequest" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnTypeOffer"
@@ -45,53 +46,79 @@
                 android:layout_weight="1"
                 android:text="Offer"
                 android:textStyle="bold"
-                app:cornerRadius="20dp"
                 android:textColor="@color/white"
-                app:backgroundTint="@color/purpleDark"/>
+                app:cornerRadius="20dp"
+                app:backgroundTint="@color/purpleDark" />
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
-        <!-- INPUTS -->
+        <!-- SELECT LOCATION -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSelectLocation"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Select location"
+            android:layout_marginBottom="16dp"
+            app:icon="@drawable/ic_map"
+            app:cornerRadius="20dp"
+            app:backgroundTint="@color/purpleDark"
+            android:textColor="@color/white" />
+
+        <!-- TITLE INPUT -->
         <EditText
             android:id="@+id/etTitle"
-            android:hint="Title"
-            android:padding="16dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:hint="Title"
+            android:padding="16dp" />
 
+        <!-- DESCRIPTION INPUT -->
         <EditText
             android:id="@+id/etDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="Description"
             android:padding="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_marginTop="12dp" />
 
-        <EditText
-            android:id="@+id/etCategory"
-            android:hint="Category (Blood, Food, ...)"
-            android:padding="16dp"
-            android:layout_marginTop="12dp"
+        <!-- ✅ CATEGORY DROPDOWN (FIXED) -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Category"
+            app:endIconMode="dropdown_menu">
 
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/etCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- CONTACT INPUT (NUMBERS + ONLY) -->
         <EditText
             android:id="@+id/etContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="Contact (phone / WhatsApp)"
             android:padding="16dp"
             android:layout_marginTop="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:inputType="phone"
+            android:digits="+0123456789"
+            android:maxLength="15" />
 
+        <!-- CREATE BUTTON -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCreate"
-            android:text="Create post"
-            android:layout_marginTop="24dp"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            app:cornerRadius="20dp"
-            app:backgroundTint="@color/purpleDark"
+            android:text="Create post"
+            android:textStyle="bold"
             android:textColor="@color/white"
-            android:textStyle="bold"/>
+            android:layout_marginTop="24dp"
+            app:cornerRadius="20dp"
+            app:backgroundTint="@color/purpleDark" />
+
     </LinearLayout>
 </ScrollView>

@@ -11,7 +11,8 @@ class PostAdapter(
     private var posts: List<Post>,
     private val onLongPress: (Post) -> Unit,
     private val onDoneClick: (Post) -> Unit,
-    private val onContactClick: (Post) -> Unit
+    private val onContactClick: (Post) -> Unit,
+    private val onDeleteClick: (Post) -> Unit = {}
 ) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     inner class PostViewHolder(
@@ -32,7 +33,6 @@ class PostAdapter(
             binding.tvDescription.text = post.description
             binding.tvMeta.text = "${post.category} • ${post.contact}"
 
-            // Done button state
             if (post.isCompleted) {
                 binding.btnDone.isEnabled = false
                 binding.btnDone.text = "Completed"
@@ -41,8 +41,17 @@ class PostAdapter(
                 binding.btnDone.text = "Done"
             }
 
-            binding.btnDone.setOnClickListener { onDoneClick(post) }
-            binding.btnContact.setOnClickListener { onContactClick(post) }
+            binding.btnDone.setOnClickListener {
+                onDoneClick(post)
+            }
+
+            binding.btnContact.setOnClickListener {
+                onContactClick(post)
+            }
+
+            binding.btnDelete.setOnClickListener {
+                onDeleteClick(post)
+            }
 
             itemView.setOnLongClickListener {
                 onLongPress(post)

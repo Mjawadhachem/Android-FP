@@ -36,6 +36,32 @@ class PostViewModel(private val repo: PostRepository) : ViewModel() {
         }
     }
 
+    // ✅ NEW — map-enabled addPost (OLD CODE UNTOUCHED)
+    fun addPost(
+        type: String,
+        title: String,
+        desc: String,
+        cat: String,
+        contact: String,
+        latitude: Double,
+        longitude: Double
+    ) {
+        viewModelScope.launch {
+            repo.add(
+                Post(
+                    type = type,
+                    title = title,
+                    description = desc,
+                    category = cat,
+                    contact = contact,
+                    latitude = latitude,
+                    longitude = longitude,
+                    isCompleted = false
+                )
+            )
+        }
+    }
+
     fun deletePost(post: Post) {
         viewModelScope.launch {
             repo.remove(post)

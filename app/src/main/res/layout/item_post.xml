@@ -16,9 +16,9 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- TYPE ROW -->
+        <!-- HEADER -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical">
@@ -27,6 +27,7 @@
                 android:id="@+id/iconType"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
+                android:contentDescription="Post type"
                 app:tint="@color/primary" />
 
             <TextView
@@ -34,12 +35,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
-                android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/primary" />
+
+            <!-- Spacer -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/btnDelete"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_delete"
+                android:contentDescription="Delete post"
+                app:tint="@color/redRequest" />
         </LinearLayout>
 
-        <!-- TITLE -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
@@ -49,25 +63,22 @@
             android:textStyle="bold"
             android:textColor="@color/onSurface" />
 
-        <!-- DESCRIPTION -->
         <TextView
             android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textSize="14sp"
             android:textColor="@color/onSurfaceVariant" />
 
-        <!-- META -->
         <TextView
             android:id="@+id/tvMeta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:textSize="12sp"
             android:textColor="@color/secondary" />
 
-        <!-- ACTION ROW -->
+        <!-- ACTIONS -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,19 +90,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:text="Contact"
-                android:textSize="12sp"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                app:cornerRadius="12dp"
-                android:layout_marginEnd="8dp"/>
+                style="@style/Widget.Material3.Button.OutlinedButton" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDone"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
+                android:layout_marginStart="8dp"
                 android:text="Done"
-                android:textSize="12sp"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                app:cornerRadius="12dp" />
+                style="@style/Widget.Material3.Button.OutlinedButton" />
         </LinearLayout>
 
     </LinearLayout>
